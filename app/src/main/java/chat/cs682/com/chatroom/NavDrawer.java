@@ -28,6 +28,14 @@ import java.util.ArrayList;
 public class NavDrawer extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     String username;
+    String to;
+    String emailtxt;
+    TextView user;
+    TextView email;
+    JSONArray posts=new JSONArray();
+    JSONArray friends=new JSONArray();
+    JSONArray groups=new JSONArray();
+
 
     public String getTo() {
         return to;
@@ -36,14 +44,6 @@ public class NavDrawer extends AppCompatActivity
     public void setTo(String to) {
         this.to = to;
     }
-
-    String to;
-    String emailtxt;
-    TextView user;
-    TextView email;
-    JSONArray posts=new JSONArray();
-    JSONArray friends=new JSONArray();
-    JSONArray groups=new JSONArray();
 
     public JSONArray getFriends() {
         return friends;
