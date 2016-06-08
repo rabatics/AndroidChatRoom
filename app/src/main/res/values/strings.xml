@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">ChatRoom</string>
+    <string name="title_activity_nav_drawer">NavDrawer</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="IP">192.168.43.249</string>
+
+    <string name="action_settings">Settings</string>
+</resources>
