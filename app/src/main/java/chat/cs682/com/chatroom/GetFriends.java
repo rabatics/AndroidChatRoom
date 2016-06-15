@@ -45,7 +45,7 @@ public class GetFriends extends AsyncTask<String,Void,String> {
         try {
             Calendar rightnow= Calendar.getInstance();
 
-            URL url = new URL("http://"+R.string.IP+":3000/userLogin/api/friends?username="+this.username+"");
+            URL url = new URL("http://"+this.mContext.getResources().getString(R.string.IP)+":3000/userLogin/api/friends?username="+this.username+"");
 
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
 

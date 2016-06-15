@@ -45,7 +45,7 @@ public class GetLogin extends AsyncTask<String,Void,String> {
         try {
             Calendar rightnow= Calendar.getInstance();
 
-            URL url = new URL("http://"+R.string.IP+":3000/userLogin/api/login?username="+this.username+"&password="+this.password+"");
+            URL url = new URL("http://"+this.mContext.getResources().getString(R.string.IP)+":3000/userLogin/api/login?username="+this.username+"&password="+this.password+"");
 
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
 

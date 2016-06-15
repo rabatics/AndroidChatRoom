@@ -21,14 +21,23 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 
 public class NavDrawer extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     String username;
-    String to;
+    JSONObject to=new JSONObject();
     String emailtxt;
     TextView user;
     TextView email;
@@ -37,12 +46,18 @@ public class NavDrawer extends AppCompatActivity
     JSONArray groups=new JSONArray();
 
 
-    public String getTo() {
-        return to;
+    public JSONObject getTo() {
+     return to;
     }
 
-    public void setTo(String to) {
-        this.to = to;
+    public void setTo(String name,String type) {
+
+        try{
+            this.to.put("name",name);
+            this.to.put("type",type);
+        }catch(JSONException e){
+
+        }
     }
 
     public JSONArray getFriends() {
@@ -127,6 +142,7 @@ public class NavDrawer extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.nav_drawer, menu);
+
         return true;
     }
 
@@ -138,9 +154,9 @@ public class NavDrawer extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+     /*   if (id == R.id.action_settings) {
             return true;
-        }
+        }*/
 
         return super.onOptionsItemSelected(item);
     }

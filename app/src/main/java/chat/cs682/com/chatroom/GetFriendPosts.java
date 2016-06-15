@@ -51,7 +51,7 @@ public class GetFriendPosts extends AsyncTask<String,Void,String> {
         try {
             Calendar rightnow= Calendar.getInstance();
 
-            URL url = new URL("http://"+R.string.IP+":3000/users/api/change?from="+this.username+"&name="+this.tofriend+"");
+            URL url = new URL("http://"+this.mContext.getResources().getString(R.string.IP)+":3000/users/api/change?from="+this.username+"&name="+this.tofriend+"");
 
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
 

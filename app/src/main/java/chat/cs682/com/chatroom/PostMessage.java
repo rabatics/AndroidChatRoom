@@ -32,9 +32,9 @@ public class PostMessage extends AsyncTask<String, Void, Void> {
     }
 
     protected void onPreExecute(){
-        progress= new ProgressDialog(this.context);
+       /* progress= new ProgressDialog(this.context);
         progress.setMessage("Loading");
-        progress.show();
+        progress.show();*/
     }
 
     @Override
@@ -42,10 +42,11 @@ public class PostMessage extends AsyncTask<String, Void, Void> {
         try {
 
             //final TextView outputView = (TextView) findViewById(R.id.showOutput);
-            URL url = new URL("http://"+R.string.IP+":3000/users/api/add");
+            URL url = new URL("http://"+this.context.getResources().getString(R.string.IP)+":3000/users/api/add");
 
             HttpURLConnection connection = (HttpURLConnection)url.openConnection();
-            String urlParameters = "fromuser="+this.username+"&to="+this.to+"&content="+this.msg+"";
+            String urlParameters = "from="+this.username+"&to="+this.to+"&content="+this.msg;
+            System.out.println(urlParameters);
             connection.setRequestMethod("POST");
             connection.setRequestProperty("USER-AGENT", "Mozilla/5.0");
             connection.setRequestProperty("ACCEPT-LANGUAGE", "en-US,en;0.5");
@@ -57,9 +58,9 @@ public class PostMessage extends AsyncTask<String, Void, Void> {
             int responseCode = connection.getResponseCode();
 
             final StringBuilder output = new StringBuilder("Request URL " + url);
-            output.append(System.getProperty("line.separator") + "Request Parameters " + urlParameters);
+         /*   output.append(System.getProperty("line.separator") + "Request Parameters " + urlParameters);
             output.append(System.getProperty("line.separator")  + "Response Code " + responseCode);
-            output.append(System.getProperty("line.separator")  + "Type " + "POST");
+            output.append(System.getProperty("line.separator")  + "Type " + "POST");*/
             BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             String line = "";
             StringBuilder responseOutput = new StringBuilder();
@@ -71,14 +72,10 @@ public class PostMessage extends AsyncTask<String, Void, Void> {
 
             output.append(System.getProperty("line.separator") + "Response " + System.getProperty("line.separator") + System.getProperty("line.separator") + responseOutput.toString());
 
-            ((NavDrawer)this.context).runOnUiThread(new Runnable() {
+System.out.println(output);
 
-                @Override
-                public void run() {
-                    //outputView.setText(output);
-                    progress.dismiss();
-                }
-            });
+
+
 
         } catch (MalformedURLException e) {
             // TODO Auto-generated catch block

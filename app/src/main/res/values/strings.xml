@@ -4,7 +4,8 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="IP">192.168.43.249</string>
-
+    <string name="IP">10.0.0.4</string>
+<string name="f">friend</string>
+    <string name="g">group</string>
     <string name="action_settings">Settings</string>
 </resources>
