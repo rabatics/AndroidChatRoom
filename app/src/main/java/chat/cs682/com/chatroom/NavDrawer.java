@@ -25,6 +25,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class NavDrawer extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -44,6 +46,11 @@ public class NavDrawer extends AppCompatActivity
     JSONArray posts=new JSONArray();
     JSONArray friends=new JSONArray();
     JSONArray groups=new JSONArray();
+    HashMap<String,String> rec=new HashMap<>();
+
+    public void addRecent(String user,String type){
+        rec.put(user,type);
+    }
 
 
     public JSONObject getTo() {
@@ -119,7 +126,10 @@ public class NavDrawer extends AppCompatActivity
                 getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
-            GetFriends g = new GetFriends(this, username);
+            GetFriends f = new GetFriends(this, username);
+            f.execute();
+
+            GetGroups g= new GetGroups(this,username);
             g.execute();
            /* f = new FragmentFriends();*/
         }else{
@@ -141,10 +151,28 @@ public class NavDrawer extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
+        menu.clear();
+
         getMenuInflater().inflate(R.menu.nav_drawer, menu);
 
         return true;
     }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        menu.clear();
+
+        for(Map.Entry e: rec.entrySet()){
+            menu.add((String)e.getKey());
+        }
+
+        getMenuInflater().inflate(R.menu.nav_drawer, menu);
+
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -152,7 +180,21 @@ public class NavDrawer extends AppCompatActivity
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+        String it=item.getTitle().toString();
+        String type=rec.get(it);
+        FragmentManager fm=getSupportFragmentManager();
+        setTo(it,type);
 
+            if(type.contentEquals(getResources().getString(R.string.f))){
+                GetFriendPosts f=new GetFriendPosts(this,getUsername(),it);
+                f.execute();
+            }
+            else{
+                GetGroupPosts f=new GetGroupPosts(this,it);
+                f.execute();
+            }
+        Fragment frag=new FragmentChat();
+        fm.beginTransaction().replace(R.id.content, frag).commit();
         //noinspection SimplifiableIfStatement
      /*   if (id == R.id.action_settings) {
             return true;
@@ -183,6 +225,16 @@ public class NavDrawer extends AppCompatActivity
             }
 
         } else if (id == R.id.groups) {
+            ConnectivityManager connMgr = (ConnectivityManager)
+                    getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+            if (networkInfo != null && networkInfo.isConnected()) {
+                GetGroups g = new GetGroups(this, username);
+                g.execute();
+                f = new FragmentGroups();
+            }else{
+                Toast.makeText(this, "Bad Internet Connection........ Please try again later. ", Toast.LENGTH_LONG).show();
+            }
 
         } else if (id == R.id.find) {
 

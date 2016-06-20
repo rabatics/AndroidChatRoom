@@ -58,6 +58,11 @@ public class FragmentChat extends Fragment {
 
         int length = ob.length();
         listContents = new ArrayList<String>();
+        try {
+            listContents.add("MESSAGES FROM :" + ((NavDrawer) getActivity()).getTo().getString("name").toUpperCase());
+        }catch(JSONException e){
+
+        }
         //     List<String> listNum=new ArrayList<>(30);
         for (int i = 0; i < length; i++) {
             try {
@@ -65,49 +70,46 @@ public class FragmentChat extends Fragment {
             } catch (JSONException e) {
 
             }
-      /*      for ( i = 0; i < 30; i++) {
+        }
 
-                listNum.add("" + i);
-
-            }*/
-
-            //  ListView myListView = (ListView) findViewById(R.id.l);
             String[] s=listContents.toArray(new String[]{});
             msgs=new CustomAdapter(getActivity(), R.layout.drawer_list_item, s);
             posts.setAdapter(msgs);
-        }
+
 
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String user=((NavDrawer) getActivity()).getUsername();
-                JSONObject t=new JSONObject();
-                String to="";
+                String user = ((NavDrawer) getActivity()).getUsername();
+                JSONObject t = new JSONObject();
+                String to = "";
                 try {
-                    t=((NavDrawer) getActivity()).getTo();
+                    t = ((NavDrawer) getActivity()).getTo();
                     to = t.getString("name");
-                }catch(JSONException e){
-                    Toast.makeText(getActivity(),"Invalid Recepient",Toast.LENGTH_LONG);
+                } catch (JSONException e) {
+                    Toast.makeText(getActivity(), "Invalid Recepient", Toast.LENGTH_LONG);
                 }
-                String ms=msg.getText().toString();
-                msg.setText("");
-                listContents.add(user + " : " + ms);
-                msgs.notifyDataSetChanged();
-                PostMessage p=new PostMessage(getActivity(),user,to,ms);
-                p.execute();
-               try{
-                   if(t.getString("type").contentEquals(getActivity().getResources().getString(R.string.f))){
-                       GetFriendPosts f=new GetFriendPosts(getActivity(),user,to);
-                       f.execute();
-                   }
-                   else{
-                     /*  GetGroupPosts f=new GetGroupPosts(getActivity(),to);
-                       f.execute();*/
-                   }
-               }
-               catch (JSONException e){
-                   Toast.makeText(getActivity(),"Couldn't Process Recepient Type",Toast.LENGTH_LONG);
-               }
+                String ms = msg.getText().toString();
+                if (!ms.contentEquals(null)) {
+                    msg.setText("");
+                    listContents.add(user + " : " + ms);
+                    msgs.notifyDataSetChanged();
+                    PostMessage p = new PostMessage(getActivity(), user, to, ms);
+                    p.execute();
+                    try {
+                        if (t.getString("type").contentEquals(getActivity().getResources().getString(R.string.f))) {
+                            GetFriendPosts f = new GetFriendPosts(getActivity(), user, to);
+                            f.execute();
+                        } else {
+                            GetGroupPosts f = new GetGroupPosts(getActivity(), to);
+                            f.execute();
+                        }
+                    } catch (JSONException e) {
+                        Toast.makeText(getActivity(), "Couldn't Process Recepient Type", Toast.LENGTH_LONG);
+                    }
+                } else {
+                    Toast.makeText(getActivity(), "What do you want to say to "+user+" ?", Toast.LENGTH_LONG);
+                }
 
             }
         });

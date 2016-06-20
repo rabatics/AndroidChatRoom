@@ -15,23 +15,9 @@ import java.util.List;
 public class CustomAdapter extends ArrayAdapter {
 
 
-  /*public static final int TYPE_ODD = 0;
-    public static final int TYPE_EVEN = 1;
-    public static final int TYPE_WHITE = 2;
-    public static final int TYPE_BLACK = 3;*/
-
     private String[] objects;
 
 
-   /* @Override
-    public int getViewTypeCount() {
-        return 4;
-    }*/
-/*
-    @Override
-    public int getItemViewType(int position) {
-        return objects[position].getType();
-    }*/
 
     public CustomAdapter(Context context, int resource, String[] objects) {
         super(context, resource, objects);

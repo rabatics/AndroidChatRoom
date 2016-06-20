@@ -9,8 +9,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="test.cs682.com.test.MainActivity"
-    tools:showIn="@layout/activity_main"
+    tools:context="chat.cs682.com.chatroom.LoginActivity"
+    tools:showIn="@layout/activity_login"
     android:background="#FFFFFF">
 
     <ImageView

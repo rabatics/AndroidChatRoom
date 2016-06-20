@@ -92,13 +92,14 @@ friend.setOnItemClickListener(new AdapterView.OnItemClickListener() {
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         // When clicked, show a toast with the TextView text
         String name = (String) friend.getItemAtPosition(position);
-        ((NavDrawer) getActivity()).setTo(name,getActivity().getResources().getString(R.string.f));
+        ((NavDrawer) getActivity()).setTo(name, getActivity().getResources().getString(R.string.f));
         GetFriendPosts g=new GetFriendPosts(getActivity(),username,name);
         g.execute();
 
-
+        ((NavDrawer) getActivity()).addRecent(name, getActivity().getResources().getString(R.string.f));
         Toast.makeText(getActivity(),
                 ((TextView) view).getText(), Toast.LENGTH_SHORT).show();
+        ((NavDrawer) getActivity()).invalidateOptionsMenu();
     }
 });
 
