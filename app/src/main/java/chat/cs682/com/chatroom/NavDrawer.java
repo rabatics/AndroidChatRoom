@@ -1,13 +1,16 @@
 package chat.cs682.com.chatroom;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -47,6 +50,8 @@ public class NavDrawer extends AppCompatActivity
     JSONArray friends=new JSONArray();
     JSONArray groups=new JSONArray();
     HashMap<String,String> rec=new HashMap<>();
+    private SharedPreferences preferences;
+    private SharedPreferences.Editor editor;
 
     public void addRecent(String user,String type){
         rec.put(user,type);
@@ -144,6 +149,7 @@ public class NavDrawer extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
+
             super.onBackPressed();
         }
     }
@@ -220,6 +226,9 @@ public class NavDrawer extends AppCompatActivity
                 GetFriends g = new GetFriends(this, username);
                 g.execute();
                 f = new FragmentFriends();
+                fm.beginTransaction().replace(R.id.content, f).commit();
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawer.closeDrawer(GravityCompat.START);
             }else{
                 Toast.makeText(this, "Bad Internet Connection........ Please try again later. ", Toast.LENGTH_LONG).show();
             }
@@ -232,6 +241,9 @@ public class NavDrawer extends AppCompatActivity
                 GetGroups g = new GetGroups(this, username);
                 g.execute();
                 f = new FragmentGroups();
+                fm.beginTransaction().replace(R.id.content, f).commit();
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawer.closeDrawer(GravityCompat.START);
             }else{
                 Toast.makeText(this, "Bad Internet Connection........ Please try again later. ", Toast.LENGTH_LONG).show();
             }
@@ -239,12 +251,55 @@ public class NavDrawer extends AppCompatActivity
         } else if (id == R.id.find) {
 
         } else if (id == R.id.exit) {
-            android.os.Process.killProcess(android.os.Process.myPid());
-            System.exit(0);
+           onExit();
+            finish();
         }
-        fm.beginTransaction().replace(R.id.content, f).commit();
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
+
         return true;
     }
+
+
+/*
+
+
+
+    public void onExitStop(){
+        preferences= PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        Log.v("Error check","Stopped Nav");
+        editor=preferences.edit();
+        editor.clear();
+        editor.commit();
+       onExitDestroy();
+        super.onStop();
+
+    }
+*/
+
+
+    public void onExit(){
+        preferences= PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        Log.v("Error check", "Exited Nav");
+        editor=preferences.edit();
+        editor.clear();
+        editor.commit();
+    }
+
+
+
+    public void onExitPause(){
+
+        preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        editor=preferences.edit();
+        Log.d("Error check", "Paused Nav  :  "+username+"-"+emailtxt);
+        editor.putString("user", username);
+        editor.putString("email",emailtxt);
+        editor.putString("weight", "4");
+        editor.putString("height", "90");
+        editor.putBoolean("loggedin", true);
+        editor.commit();
+        super.onPause();
+
+    }
+
+
 }

@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -15,6 +16,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Calendar;
 import java.util.concurrent.Semaphore;
@@ -43,33 +45,45 @@ public class GetGroups extends AsyncTask<String,Void,String> {
         String result = "";
 
         try {
-            Calendar rightnow= Calendar.getInstance();
+
 
             URL url = new URL("http://"+this.mContext.getResources().getString(R.string.IP)+":3000/userLogin/api/groups?username="+this.username+"");
 
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+            Log.v("Error check","1");
+            InputStream responseStream = urlConnection.getInputStream();
+            if(responseStream!=null) {
+                InputStream in = new BufferedInputStream(responseStream);
 
-            InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+                StringBuffer sb = new StringBuffer();
 
-            StringBuffer sb = new StringBuffer();
+                BufferedReader br = new BufferedReader(new InputStreamReader(in));
 
-            BufferedReader br = new BufferedReader(new InputStreamReader(in));
+                String read;
+                Log.v("Error check","2");
+                while ((read = br.readLine()) != null) {
 
-            String read;
+                    sb.append(read);
 
-            while((read = br.readLine())!=null){
+                }
 
-                sb.append(read);
+                br.close();
 
+                result = sb.toString();
             }
 
-            br.close();
+        }catch (MalformedURLException e) {
+            // Replace this with your exception handling
+            e.printStackTrace();
+          /*  progressDialog.setMessage("Could not connect to server");
+            progressDialog.cancel();*/
 
-            result = sb.toString();
-
-        } catch (IOException e) {
+        } catch (Exception e) {
 
             Log.d(TAG, "Error: " + e.toString());
+          /*  progressDialog.setMessage("Could not connect to server");
+            progressDialog.cancel();*/
+
 
         }
 
@@ -97,25 +111,25 @@ public class GetGroups extends AsyncTask<String,Void,String> {
     protected void onPostExecute(String data){
         JSONObject o = new JSONObject();
         progressDialog.cancel();
-
+        Log.v("Error check", "3");
         try {
             if(!data.contentEquals("")) {
                 o = new JSONObject(data);
                if(o.getString("status").contains("1")) {
                    JSONArray f = o.optJSONArray("groups");
                    ((NavDrawer) this.mContext).setGroups(f);
-                                                                    //((LoginActivity)this.mContext).goAhead();  // ((NavDrawer) this.mContext).setStatus(o.getInt("status"));
+                   Log.v("Error check", "4");                                                //((LoginActivity)this.mContext).goAhead();  // ((NavDrawer) this.mContext).setStatus(o.getInt("status"));
                }
             }
             else{
                 o = new JSONObject();
                 o.put("groups", new JSONArray());
-
+                Log.v("Error check", "5");
                                                                      //   ((LoginActivity) this.mContext).setStatus(o.getInt("status")); //   ((LoginActivity)this.mContext).goAhead();
             }
         }
         catch(JSONException e){
-            Log.v(TAG, "Error = ");
+            Log.v(TAG, "Error =6 ");
 
             try {
 
@@ -125,7 +139,7 @@ public class GetGroups extends AsyncTask<String,Void,String> {
 
 
             }catch(JSONException e1){
-                Log.v(TAG, "Error = ");
+                Log.v(TAG, "Error = 7");
             }
         }
         Log.v(TAG, "data = " + data);

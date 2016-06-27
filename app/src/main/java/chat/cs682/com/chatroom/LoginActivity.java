@@ -118,12 +118,23 @@ public class LoginActivity extends AppCompatActivity {
 
                 intent.putExtra("user", username);
                 intent.putExtra("email", email);
-
+                preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                editor=preferences.edit();
+                Log.d("Error check", "Paused Nav  :  "+username+"-"+email);
+                editor.putString("user", username);
+                editor.putString("email",email);
+                editor.putString("weight", "4");
+                editor.putString("height", "90");
+                editor.putBoolean("loggedin", true);
+                editor.commit();
 
                 startActivity(intent);
                 finish();
             } else if (status == 0) {
                 Toast.makeText(this, "The username and password you entered did not match any record, Try Again!", Toast.LENGTH_LONG).show();
+            }
+        else{
+                Toast.makeText(this, "Try Again!", Toast.LENGTH_LONG).show();
             }
 
 
@@ -136,7 +147,7 @@ public class LoginActivity extends AppCompatActivity {
     public void onRestart(){
         super.onRestart();
         Log.d("myApp", "Error: Main restart");
-        preferences= PreferenceManager.getDefaultSharedPreferences(context);
+        preferences= PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         String username=preferences.getString("user", "");
         String emailtxt=preferences.getString("email", "");
         String height=preferences.getString("height", "4");
@@ -164,27 +175,13 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    public void onStop(){
-        super.onStop();
-        preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        editor=preferences.edit();
-        Log.d("myApp", "Error: Stopped  "+username+"-"+email);
-        editor.putString("user",username);
-        editor.putString("email",email);
-        editor.putString("weight", "4");
-        editor.putString("height", "90");
-        editor.putBoolean("loggedin", true);
-        editor.commit();
-
-    }
 
     @Override
     public void onStart(){
         super.onStart();
         Log.d("myApp", "Error: Main start");
         context=getApplicationContext();
-        preferences= PreferenceManager.getDefaultSharedPreferences(context);
+        preferences= PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         String user=preferences.getString("user","user");
         Boolean log=preferences.getBoolean("loggedin",false);
 

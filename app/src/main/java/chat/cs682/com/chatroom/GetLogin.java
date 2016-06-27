@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -13,7 +14,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.ConnectException;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Calendar;
 import java.util.concurrent.Semaphore;
@@ -48,30 +51,45 @@ public class GetLogin extends AsyncTask<String,Void,String> {
             URL url = new URL("http://"+this.mContext.getResources().getString(R.string.IP)+":3000/userLogin/api/login?username="+this.username+"&password="+this.password+"");
 
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+            Log.v("Error check","l1");
+            InputStream responseStream = urlConnection.getInputStream();
+            if(responseStream!=null) {
+                InputStream in = new BufferedInputStream(responseStream);
 
-            InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+               StringBuffer sb = new StringBuffer();
 
-            StringBuffer sb = new StringBuffer();
+               BufferedReader br = new BufferedReader(new InputStreamReader(in));
 
-            BufferedReader br = new BufferedReader(new InputStreamReader(in));
+               String read;
+                Log.v("Error check","l2");
+               while ((read = br.readLine()) != null) {
 
-            String read;
+                   sb.append(read);
 
-            while((read = br.readLine())!=null){
+               }
 
-                sb.append(read);
+               br.close();
 
-            }
+               result = sb.toString();
+           }
 
-            br.close();
+        } catch (MalformedURLException e) {
+            // Replace this with your exception handling
+          //  e.printStackTrace();
+           /* progressDialog.setMessage("Could not connect to server");
+            progressDialog.cancel();*/
+          //  return null;
 
-            result = sb.toString();
-
-        } catch (IOException e) {
+        }catch (Exception e) {
 
             Log.d(TAG, "Error: " + e.toString());
+         /*   progressDialog.setMessage("Could not connect to server");
+            progressDialog.cancel();*/
+          //  return null;
 
         }
+
+
 
         return result;
 
@@ -97,7 +115,7 @@ public class GetLogin extends AsyncTask<String,Void,String> {
     protected void onPostExecute(String data){
         JSONObject o = new JSONObject();
         progressDialog.cancel();
-
+        Log.v("Error check", "l3");
         try {
             if(!data.contentEquals("")) {
                 o = new JSONObject(data);
@@ -105,6 +123,7 @@ public class GetLogin extends AsyncTask<String,Void,String> {
                 ((LoginActivity) this.mContext).setStatus(o.getInt("status"));
                 ((LoginActivity) this.mContext).setEmail(o.getString("email"));
                 ((LoginActivity)this.mContext).goAhead();
+                Log.v("Error check", "l4");
             }
             else{
                 o = new JSONObject();
@@ -112,6 +131,7 @@ public class GetLogin extends AsyncTask<String,Void,String> {
 
                 ((LoginActivity) this.mContext).setStatus(o.getInt("status"));
                 ((LoginActivity)this.mContext).goAhead();
+                Log.v("Error check", "l5");
             }
         }
         catch(JSONException e){

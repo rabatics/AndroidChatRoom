@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -15,6 +16,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Calendar;
 import java.util.concurrent.Semaphore;
@@ -48,28 +50,40 @@ public class GetFriends extends AsyncTask<String,Void,String> {
             URL url = new URL("http://"+this.mContext.getResources().getString(R.string.IP)+":3000/userLogin/api/friends?username="+this.username+"");
 
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+            Log.v("Error check","f1");
+            InputStream responseStream = urlConnection.getInputStream();
+            if(responseStream!=null) {
+                InputStream in = new BufferedInputStream(responseStream);
 
-            InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+                StringBuffer sb = new StringBuffer();
 
-            StringBuffer sb = new StringBuffer();
+                BufferedReader br = new BufferedReader(new InputStreamReader(in));
+                Log.v("Error check","f2");
+                String read;
 
-            BufferedReader br = new BufferedReader(new InputStreamReader(in));
+                while ((read = br.readLine()) != null) {
 
-            String read;
+                    sb.append(read);
 
-            while((read = br.readLine())!=null){
+                }
 
-                sb.append(read);
+                br.close();
 
+                result = sb.toString();
             }
 
-            br.close();
+        }catch (MalformedURLException e) {
+            // Replace this with your exception handling
+       /*     e.printStackTrace();
+            progressDialog.setMessage("Could not connect to server");
+            progressDialog.cancel();*/
 
-            result = sb.toString();
-
-        } catch (IOException e) {
+        } catch (Exception e) {
 
             Log.d(TAG, "Error: " + e.toString());
+         /*   progressDialog.setMessage("Could not connect to server");
+            progressDialog.cancel();*/
+
 
         }
 
@@ -97,19 +111,22 @@ public class GetFriends extends AsyncTask<String,Void,String> {
     protected void onPostExecute(String data){
         JSONObject o = new JSONObject();
         progressDialog.cancel();
+        Log.v("Error check", "f3");
 
         try {
             if(!data.contentEquals("")) {
                 o = new JSONObject(data);
                 JSONArray f=o.optJSONArray("friends");
+
                        // ((NavDrawer) this.mContext).setStatus(o.getInt("status"));
                 ((NavDrawer) this.mContext).setFriends(f);
+                Log.v("Error check", "f4");
                 //((LoginActivity)this.mContext).goAhead();
             }
             else{
                 o = new JSONObject();
                 o.put("friends", new JSONArray());
-
+                Log.v("Error check", "f5");
              //   ((LoginActivity) this.mContext).setStatus(o.getInt("status"));
              //   ((LoginActivity)this.mContext).goAhead();
             }
@@ -120,7 +137,7 @@ public class GetFriends extends AsyncTask<String,Void,String> {
             try {
 
                 o.put("friends",new JSONArray());
-
+                Log.v("Error check", "f6");
               //  ((LoginActivity) this.mContext).setStatus(o.getInt("status"));
              //   ((LoginActivity)this.mContext).goAhead();
 

@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -18,6 +19,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Calendar;
 import java.util.concurrent.Semaphore;
@@ -54,28 +56,39 @@ public class GetFriendPosts extends AsyncTask<String,Void,String> {
             URL url = new URL("http://"+this.mContext.getResources().getString(R.string.IP)+":3000/users/api/change?from="+this.username+"&name="+this.tofriend+"");
 
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+            Log.v("Error check","1");
+            InputStream responseStream = urlConnection.getInputStream();
+            if(responseStream!=null) {
+                InputStream in = new BufferedInputStream(responseStream);
 
-            InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+                StringBuffer sb = new StringBuffer();
 
-            StringBuffer sb = new StringBuffer();
+                BufferedReader br = new BufferedReader(new InputStreamReader(in));
 
-            BufferedReader br = new BufferedReader(new InputStreamReader(in));
+                String read;
 
-            String read;
+                while ((read = br.readLine()) != null) {
 
-            while((read = br.readLine())!=null){
+                    sb.append(read);
 
-                sb.append(read);
+                }
 
+                br.close();
+
+                result = sb.toString();
             }
+        }catch (MalformedURLException e) {
+            // Replace this with your exception handling
+        /*    e.printStackTrace();
+            progressDialog.setMessage("Could not connect to server");
+            progressDialog.cancel();*/
 
-            br.close();
-
-            result = sb.toString();
-
-        } catch (IOException e) {
+        } catch (Exception e) {
 
             Log.d(TAG, "Error: " + e.toString());
+          /*  progressDialog.setMessage("Could not connect to server");
+            progressDialog.cancel();
+*/
 
         }
 

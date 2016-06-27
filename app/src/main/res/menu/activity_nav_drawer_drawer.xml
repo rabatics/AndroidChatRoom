@@ -2,26 +2,42 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/prof"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Profile" />
+
+        <item android:title="CHAT">
+        <menu>
         <item
             android:id="@+id/friends"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@mipmap/friend"
             android:title="Friends" />
         <item
             android:id="@+id/groups"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@mipmap/group"
             android:title="Groups" />
+        </menu>
+        </item>
+        <item android:title="SETTINGS">
+        <menu>
         <item
             android:id="@+id/find"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@mipmap/find"
             android:title="Find" />
+            <item
+                android:id="@+id/creategrp"
+                android:icon="@mipmap/creategrp"
+                android:title="Create Group" />
+
+
+
+        <item
+            android:id="@+id/prof"
+            android:icon="@mipmap/profile"
+            android:title="Profile" />
         <item
             android:id="@+id/exit"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@mipmap/exit"
             android:title="Exit" />
+        </menu>
+        </item>
     </group>
 
    <!-- <item android:title="Communicate">

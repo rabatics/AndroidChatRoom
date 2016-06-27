@@ -2,6 +2,7 @@ package chat.cs682.com.chatroom;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,21 +59,23 @@ public class FragmentChat extends Fragment {
 
         int length = ob.length();
         listContents = new ArrayList<String>();
-        try {
+       /* try {
             listContents.add("MESSAGES FROM :" + ((NavDrawer) getActivity()).getTo().getString("name").toUpperCase());
         }catch(JSONException e){
 
         }
-        //     List<String> listNum=new ArrayList<>(30);
+        //     List<String> listNum=new ArrayList<>(30);*/
         for (int i = 0; i < length; i++) {
             try {
                 listContents.add(ob.getJSONObject(i).getString("from") + " : " + ob.getJSONObject(i).getString("content"));
+                Log.v("App",ob.getJSONObject(i).getString("from") +" : "  + ob.getJSONObject(i).getString("content"));
             } catch (JSONException e) {
 
             }
         }
 
-            String[] s=listContents.toArray(new String[]{});
+            String[] s=new String[listContents.size()];
+        s=listContents.toArray(s);
             msgs=new CustomAdapter(getActivity(), R.layout.drawer_list_item, s);
             posts.setAdapter(msgs);
 
@@ -80,6 +83,7 @@ public class FragmentChat extends Fragment {
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 String user = ((NavDrawer) getActivity()).getUsername();
                 JSONObject t = new JSONObject();
                 String to = "";
@@ -90,11 +94,12 @@ public class FragmentChat extends Fragment {
                     Toast.makeText(getActivity(), "Invalid Recepient", Toast.LENGTH_LONG);
                 }
                 String ms = msg.getText().toString();
-                if (!ms.contentEquals(null)) {
+                if (!ms.contentEquals("")) {
                     msg.setText("");
                     listContents.add(user + " : " + ms);
-                    msgs.notifyDataSetChanged();
-                    PostMessage p = new PostMessage(getActivity(), user, to, ms);
+                    // msgs.notifyDataSetChanged();
+                    ((CustomAdapter)posts.getAdapter()).notifyDataSetChanged();
+                            PostMessage p = new PostMessage(getActivity(), user, to, ms);
                     p.execute();
                     try {
                         if (t.getString("type").contentEquals(getActivity().getResources().getString(R.string.f))) {
@@ -108,7 +113,7 @@ public class FragmentChat extends Fragment {
                         Toast.makeText(getActivity(), "Couldn't Process Recepient Type", Toast.LENGTH_LONG);
                     }
                 } else {
-                    Toast.makeText(getActivity(), "What do you want to say to "+user+" ?", Toast.LENGTH_LONG);
+                    Toast.makeText(getActivity(), "What do you want to say to " + user + " ?", Toast.LENGTH_LONG);
                 }
 
             }
