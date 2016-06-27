@@ -7,3 +7,6 @@ The 'Find' navigation item is used to to find other friends on the network by th
 The NavDrawer activity also maintains a record of the users recent contacts (for that session only). 
 The method used for recent contacts is unique to this app. The recent contacts are accessed from the Options menu.
 The entire application is controlled by the NavDrawer activity which creates and inflates Fragments for each use-case.
+
+
+![cr1](https://cloud.githubusercontent.com/assets/15708321/16393370/835b487c-3c7e-11e6-8ce4-8f9a2859d5ee.JPG)
