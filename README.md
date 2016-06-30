@@ -9,6 +9,12 @@ The method used for recent contacts is unique to this app. The recent contacts a
 The entire application is controlled by the NavDrawer activity which creates and inflates Fragments for each use-case.
 
 
+![crs2](https://cloud.githubusercontent.com/assets/15708321/16474462/0c379002-3e45-11e6-806c-f50a07e23a77.jpg)
+
+
+![crs1](https://cloud.githubusercontent.com/assets/15708321/16474454/0594bac2-3e45-11e6-82c0-29ef888bc4ab.jpg)
+
+
 ![cr1](https://cloud.githubusercontent.com/assets/15708321/16393370/835b487c-3c7e-11e6-8ce4-8f9a2859d5ee.JPG)
 
 ![cr2](https://cloud.githubusercontent.com/assets/15708321/16393470/f75df8a0-3c7e-11e6-95fc-770a0d6886e1.JPG)
