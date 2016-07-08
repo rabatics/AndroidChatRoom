@@ -12,13 +12,14 @@ The entire application is controlled by the NavDrawer activity which creates and
 
 ![crs1](https://cloud.githubusercontent.com/assets/15708321/16703983/2dc0b71a-4540-11e6-86ae-1a75a0bf8f03.jpg)
 
+![cr1](https://cloud.githubusercontent.com/assets/15708321/16703986/3585d8f4-4540-11e6-8acf-e6112db93db0.JPG)
 
 ![crhm](https://cloud.githubusercontent.com/assets/15708321/16704009/66932104-4540-11e6-821e-13328ab1eea1.JPG)
 
 ![crhm2](https://cloud.githubusercontent.com/assets/15708321/16704011/6bc89bcc-4540-11e6-9aff-aaa109c47cc3.JPG)
 
 
-![cr1](https://cloud.githubusercontent.com/assets/15708321/16703986/3585d8f4-4540-11e6-8acf-e6112db93db0.JPG)
+
 
 ![cr2](https://cloud.githubusercontent.com/assets/15708321/16703991/41bf1cfc-4540-11e6-9904-f70c7bb232ef.JPG)
 
