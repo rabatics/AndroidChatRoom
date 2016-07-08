@@ -8,24 +8,27 @@ The NavDrawer activity also maintains a record of the users recent contacts (for
 The method used for recent contacts is unique to this app. The recent contacts are accessed from the Options menu.
 The entire application is controlled by the NavDrawer activity which creates and inflates Fragments for each use-case.
 
+![crs2](https://cloud.githubusercontent.com/assets/15708321/16703978/27073692-4540-11e6-9361-f877f5263ab6.jpg)
 
-![crs2](https://cloud.githubusercontent.com/assets/15708321/16505726/5f2e3e30-3eec-11e6-81f3-9063e8667387.jpg)
-
-![crs1](https://cloud.githubusercontent.com/assets/15708321/16505728/64db68da-3eec-11e6-94fd-e7956b603825.jpg)
-
+![crs1](https://cloud.githubusercontent.com/assets/15708321/16703983/2dc0b71a-4540-11e6-86ae-1a75a0bf8f03.jpg)
 
 
-![cr1](https://cloud.githubusercontent.com/assets/15708321/16393370/835b487c-3c7e-11e6-8ce4-8f9a2859d5ee.JPG)
+![crhm](https://cloud.githubusercontent.com/assets/15708321/16704009/66932104-4540-11e6-821e-13328ab1eea1.JPG)
 
-![cr2](https://cloud.githubusercontent.com/assets/15708321/16393470/f75df8a0-3c7e-11e6-95fc-770a0d6886e1.JPG)
+![crhm2](https://cloud.githubusercontent.com/assets/15708321/16704011/6bc89bcc-4540-11e6-9aff-aaa109c47cc3.JPG)
 
-![cr3](https://cloud.githubusercontent.com/assets/15708321/16393476/fea7530e-3c7e-11e6-9596-b5045918ac91.JPG)
 
-![cr4](https://cloud.githubusercontent.com/assets/15708321/16393483/0642f08c-3c7f-11e6-8b73-af4e11b2ab05.JPG)
+![cr1](https://cloud.githubusercontent.com/assets/15708321/16703986/3585d8f4-4540-11e6-8acf-e6112db93db0.JPG)
 
-![cr5](https://cloud.githubusercontent.com/assets/15708321/16393489/0da8e2dc-3c7f-11e6-8f61-313b57ce4062.JPG)
+![cr2](https://cloud.githubusercontent.com/assets/15708321/16703991/41bf1cfc-4540-11e6-9904-f70c7bb232ef.JPG)
 
-![cr6](https://cloud.githubusercontent.com/assets/15708321/16393493/14255a14-3c7f-11e6-948f-dfa55a9c5cb1.JPG)
+![cr3](https://cloud.githubusercontent.com/assets/15708321/16703996/48931d76-4540-11e6-8f49-078afa3f7e9d.JPG)
 
-![cr7](https://cloud.githubusercontent.com/assets/15708321/16393502/1c8e2adc-3c7f-11e6-8369-ba03e78ddf48.JPG)
+![cr4](https://cloud.githubusercontent.com/assets/15708321/16703999/4f046c28-4540-11e6-8801-4590541956da.JPG)
 
+![cr5](https://cloud.githubusercontent.com/assets/15708321/16704013/742c8ada-4540-11e6-98e7-c0c34f34ee2b.JPG)
+
+![cr6](https://cloud.githubusercontent.com/assets/15708321/16704016/7bf6f7fa-4540-11e6-84d0-a5931030c92c.JPG)
+
+
+![cr7](https://cloud.githubusercontent.com/assets/15708321/16704019/82c89d2c-4540-11e6-984b-34682e776ca4.JPG)
